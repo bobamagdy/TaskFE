@@ -1,0 +1,143 @@
+
+
+<div class="container">
+  <div style="text-align: center;color: blue;background-color:honeydew;margin-top: 10px;">
+    <h3>Define / Modify Answer Demographic information</h3>
+    <hr />
+  </div>
+    <div class="row">
+      <div class="col input-group-prepend" >
+        <ng-select [items]="list" (change)="getTypeById()"
+        placeholder="Select Demographic Type Id"
+                   bindLabel="demTypeId"
+                   [(ngModel)]="type">
+        </ng-select>
+        </div>
+        <div class="col">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Demographic Type Description</span>
+            </div>
+            <input type="text"  [(ngModel)]="typeDescAr"  class="form-control" readonly>
+          </div>
+          </div>
+    </div>
+
+<div *ngIf="ViewDetailsTable">
+  <table  class="table table-response bg-light border rounded">
+    <thead>
+      <tr class="bg-primary text-light" style="text-align: center;">
+        <th>Add</th>
+        <th>Answer Description (Ar)</th>
+        <th>Answer Description (En)</th>
+        <th>Weight</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody >
+       <tr  *ngFor="let item of detailsList;let indexOfelement=index;" >
+         <td>
+           <button type="button" name="" id="" class="btn btn-success" (click)="addNewRowDetails()">+</button></td>
+        <td>
+          <input type="text" class="form-control" [(ngModel)]="detailsList[indexOfelement].choicesAr">
+        </td>
+        <td>
+          <input  type="text" class="form-control"  [(ngModel)]="detailsList[indexOfelement].choicesEn">
+        </td>
+        <td>
+          <input  type="number" class="form-control"  [(ngModel)]="detailsList[indexOfelement].weightValue">
+
+        </td>
+        <td>
+          <button type="button" name="" id="" class="btn btn-danger" (click)="DeleteRowDetails(indexOfelement)"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" name="" id="" class="btn btn-primary mb-3" (click)="SaveDetails()">Save Details Data</button>
+
+</div>
+
+<hr/>
+
+<div style="text-align: center;color: blue;background-color:honeydew;">
+  <h3>Demographic Type information</h3>
+  <hr />
+</div>
+
+
+  <button type="button" name="" id="" class="btn btn-warning mb-3" style="margin-right: 10px;" (click)="ActiveInAddCase()">
+    Add new Demographic Type
+  </button>
+  <button type="button" name="" id="" class="btn btn-info mb-3" (click)="viewAll()">
+    View All Demographic Type
+  </button>
+
+
+  <div *ngIf="InAddCase" class="form-inline" [formGroup]="form">
+    <div class="row">
+      <div class="input-group flex-nowrap mb-3 col-md-auto">
+        <span class="input-group-text" id="addon-wrapping">Description Arabic <span
+            class="text-danger"> *</span></span>
+        <input type="text" class="form-control" formControlName="typeDescAr"
+          [ngClass]="{ 'is-invalid': submitted && f.typeDescAr.errors }" autofocus />
+        <div *ngIf="submitted && f.typeDescAr.errors" class="invalid-feedback">
+          <div *ngIf="f.typeDescAr.errors.required">this field is required</div>
+        </div>
+      </div>
+
+      <div class="input-group flex-nowrap mb-3 col-md-auto">
+        <span class="input-group-text" id="addon-wrapping">Description English</span>
+        <input type="text" class="form-control" formControlName="typeDescEn"
+          [ngClass]="{ 'is-invalid': submitted && f.typeDescEn.errors }" />
+        <div *ngIf="submitted && f.typeDescEn.errors" class="invalid-feedback">
+          <div *ngIf="f.typeDescEn.errors.required"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <table *ngIf="viewTable"  class="table table-response bg-light border rounded">
+    <thead>
+      <tr class="bg-primary text-light">
+        <th></th>
+        <th>Index</th>
+        <th>Id</th>
+        <th>Type Description Arabic</th>
+        <th>Type Description Arabic</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody >
+       <tr  *ngFor="let item of list;let indexOfelement=index;" >
+         <td><button type="button" name="" id="" class="btn btn-primary" (click)="addNewRow()">+</button></td>
+        <td>{{indexOfelement+1}}
+
+        </td>
+
+        <td>
+          <input disabled="true"  type="text" class="form-control" [(ngModel)]="list[indexOfelement].demTypeId">
+        </td>
+        <td>
+          <input  type="text" class="form-control"  [(ngModel)]="list[indexOfelement].typeDescAr">
+
+        </td>
+        <td>
+          <input  type="text" class="form-control"  [(ngModel)]="list[indexOfelement].typeDescEn">
+
+        </td>
+        <td>
+          <button type="button" name="" id="" class="btn btn-danger" (click)="DeleteRow(indexOfelement)"><i class="fa fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <div class="col col-lg-2">
+    <button *ngIf="InAddCase||viewTable" type="submit" class="btn btn-primary mb-2" (click)="save()">Save</button>
+  </div>
+
+</div>
